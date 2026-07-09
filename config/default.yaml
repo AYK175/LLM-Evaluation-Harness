@@ -1,0 +1,62 @@
+# Default experiment: long-form factual QA over a public corpus.
+
+
+experiment_name: asqa_meta_eval_v1
+seed: 13
+
+dataset:
+  name: asqa
+  split: validation
+  n_examples: 100
+  hf_path: din0s/asqa
+  has_gold_reference: true
+  has_retrieval_corpus: true
+
+retrieval:
+  enabled: true
+  top_k: 5
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+
+# Models whose answers are being evaluated
+generators:
+  - name: gpt4o-mini
+    provider: openai
+    model_id: gpt-4o-mini
+    family: openai
+  - name: claude-haiku
+    provider: anthropic
+    model_id: claude-haiku-4-5
+    family: anthropic
+  - name: qwen-2.5-7b
+    provider: together
+    model_id: Qwen/Qwen2.5-7B-Instruct-Turbo
+    family: qwen
+  - name: llama-3.1-8b
+    provider: together
+    model_id: meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo
+    family: llama
+
+# Models acting as judges  
+judges:
+  - name: gpt4o-judge
+    provider: openai
+    model_id: gpt-4o
+    family: openai
+  - name: claude-judge
+    provider: anthropic
+    model_id: claude-sonnet-4-5
+    family: anthropic
+
+metrics:
+  lexical: [rouge, meteor]
+  semantic: [bertscore]
+  judges: [gpt4o-judge, claude-judge]
+  grounding: [ragas_faithfulness]
+
+bias:
+  position: true
+  verbosity: true
+  self_preference: true
+
+output_dir: data/raw
+gold_path: data/gold/gold.jsonl

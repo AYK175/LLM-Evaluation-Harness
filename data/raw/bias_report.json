@@ -1,0 +1,44 @@
+{
+  "position_bias": {
+    "claude-haiku-judge": {
+      "n_pairs": 300,
+      "position_consistency": 0.84,
+      "preference_fairness": 0.76,
+      "reversal_rate": 0.15333333333333332,
+      "slot_a_win_rate": 0.62
+    },
+    "claude-sonnet-judge": {
+      "n_pairs": 300,
+      "position_consistency": 0.88,
+      "preference_fairness": 0.6266666666666667,
+      "reversal_rate": 0.07666666666666666,
+      "slot_a_win_rate": 0.6866666666666666
+    }
+  },
+  "verbosity_bias": {
+    "claude-haiku-judge": {
+      "judge_length_corr": -0.0813953782954558,
+      "human_length_corr": -0.1313067475550858,
+      "verbosity_gap": 0.04991136925963001
+    },
+    "claude-sonnet-judge": {
+      "judge_length_corr": -0.10541921347209501,
+      "human_length_corr": -0.1313067475550858,
+      "verbosity_gap": 0.0258875340829908
+    }
+  },
+  "self_preference": {
+    "claude-haiku-judge": {
+      "judge_family": "anthropic",
+      "own_family_mean": NaN,
+      "other_family_mean": 2.954861111111111,
+      "gap": NaN
+    },
+    "claude-sonnet-judge": {
+      "judge_family": "anthropic",
+      "own_family_mean": NaN,
+      "other_family_mean": 2.3541666666666665,
+      "gap": NaN
+    }
+  }
+}

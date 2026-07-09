@@ -1,0 +1,43 @@
+{
+  "position_bias_mitigation": {
+    "method": "balanced-position calibration (swap-augmented, Wang et al. 2023)",
+    "before": {
+      "claude-haiku-judge": {
+        "n_pairs": 300,
+        "position_consistency": 0.84,
+        "preference_fairness": 0.76,
+        "reversal_rate": 0.15333333333333332,
+        "slot_a_win_rate": 0.62
+      },
+      "claude-sonnet-judge": {
+        "n_pairs": 300,
+        "position_consistency": 0.88,
+        "preference_fairness": 0.6266666666666667,
+        "reversal_rate": 0.07666666666666666,
+        "slot_a_win_rate": 0.6866666666666666
+      }
+    },
+    "after_tie_rate": {
+      "claude-haiku-judge": 0.16,
+      "claude-sonnet-judge": 0.12
+    },
+    "note": "After calibration, surviving verdicts are position-invariant by construction; after_tie_rate is the fraction discarded as inconsistent."
+  },
+  "self_preference_mitigation": {
+    "method": "panel-of-judges (mean pointwise)",
+    "individual_own_family_gap": {},
+    "worst_individual_gap": NaN,
+    "jury_family_deviation": {
+      "mistral": 0.25694444444444464,
+      "gemma": 0.5434027777777777,
+      "qwen": -0.8003472222222221
+    },
+    "worst_jury_deviation": 0.8003472222222221,
+    "worst_case_reduction": NaN
+  },
+  "jury_pairwise_n": 300,
+  "notes": [
+    "Verbosity bias is not addressed by these two mitigations; the honest framing is that it needs a length-controlled rubric or length-matched pairs, which is a good 'future work' line.",
+    "Report the tie-rate cost alongside the invariance gain, not just the gain."
+  ]
+}

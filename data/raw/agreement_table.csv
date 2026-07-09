@@ -1,0 +1,12 @@
+metric,spearman,kendall_tau,cohen_kappa,n
+judge_claude-sonnet-judge_overall,0.8554,0.7662,0.5625,288
+judge_claude-sonnet-judge_correctness,0.8341,0.7486,0.5304,288
+judge_claude-haiku-judge_overall,0.7619,0.6660,0.6692,288
+judge_claude-haiku-judge_correctness,0.7422,0.6499,0.7003,288
+judge_claude-sonnet-judge_grounding,0.7370,0.6500,0.5107,288
+judge_claude-haiku-judge_grounding,0.5747,0.4903,0.3265,288
+bertscore,0.3236,0.2452,0.2743,300
+rouge,0.2782,0.2078,0.1995,300
+meteor,0.2654,0.1966,0.1895,300
+faithfulness,-0.1061,-0.0964,0.0000,288
+answer_len_tokens,-0.1313,-0.0967,-0.1546,300

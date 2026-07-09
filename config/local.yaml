@@ -1,0 +1,69 @@
+# Prereqs:
+#   1. Ollama running:  `ollama serve`  (or just have the Ollama app open)
+#   2. Models pulled: mistral:latest, gemma3:12b, qwen3:4b, qwen2.5-coder:7b
+#   3. Retrieval embeddings run locally via sentence-transformers by default;
+#    
+# Run with this config instead of the default:
+#   python -m src.generate --config config/local.yaml
+#   python -m src.evaluate --config config/local.yaml --pairwise-examples 15
+#   python -m scripts.gold  template --config config/local.yaml --n 40
+#   python -m src.analyze  --config config/local.yaml
+#   python -m src.mitigate --config config/local.yaml
+# -----------------------------------------------------------------------------
+
+experiment_name: asqa_local_v1
+seed: 13
+
+dataset:
+  name: asqa
+  split: validation
+  n_examples: 40          # start small; local inference is slower than an API
+  hf_path: din0s/asqa
+  has_gold_reference: true
+  has_retrieval_corpus: true
+
+retrieval:
+  enabled: true
+  top_k: 5
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+
+# Generators: a spread of families/sizes so the analysis has contrast.
+generators:
+  - name: mistral-7b
+    provider: local
+    model_id: mistral:latest
+    family: mistral
+  - name: gemma3-12b
+    provider: local
+    model_id: gemma3:12b
+    family: gemma
+  - name: qwen3-4b
+    provider: local
+    model_id: qwen3:4b
+    family: qwen
+  - name: qwen-coder-7b
+    provider: local
+    model_id: qwen2.5-coder:7b
+    family: qwen
+
+# Judge: single largest general model is the most credible judge here.
+
+judges:
+  - name: gemma3-judge
+    provider: local
+    model_id: gemma3:12b
+    family: gemma
+
+metrics:
+  lexical: [rouge, meteor]
+  semantic: [bertscore]
+  judges: [gemma3-judge]
+  grounding: [ragas_faithfulness]
+
+bias:
+  position: true
+  verbosity: true
+  self_preference: true
+
+output_dir: data/raw
+gold_path: data/gold/local_gold.jsonl

@@ -1,0 +1,29 @@
+# Core
+pyyaml>=6.0
+pydantic>=2.6
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+pandas>=2.2
+
+# Datasets + retrieval
+datasets>=2.18
+sentence-transformers>=2.6
+
+# Lexical + semantic metrics
+rouge-score>=0.1.2
+sacrebleu>=2.4
+nltk>=3.8
+bert-score>=0.3.13
+
+# Model providers
+openai>=1.30
+anthropic>=0.34
+
+# Eval framework + dashboard
+deepeval>=1.0
+streamlit>=1.33
+
+# Dev
+pytest>=8.0
+python-dotenv>=1.0

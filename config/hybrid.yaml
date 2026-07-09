@@ -1,0 +1,65 @@
+#run:
+#   python -m src.generate  --config config/hybrid.yaml
+#   python -m scripts.gold   template --config config/hybrid.yaml --n 40
+#   python -m src.evaluate  --config config/hybrid.yaml --pairwise-examples 12
+#   python -m src.analyze   --config config/hybrid.yaml
+#   python -m src.mitigate  --config config/hybrid.yaml
+# -----------------------------------------------------------------------------
+
+experiment_name: asqa_hybrid_v1
+seed: 13
+
+dataset:
+  name: asqa
+  split: dev
+  n_examples: 100
+  hf_path: din0s/asqa
+  has_gold_reference: true
+  has_retrieval_corpus: true
+
+retrieval:
+  enabled: true
+  top_k: 5
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+
+# Generators run locally via Ollama — free, and none share a family with the judges.
+generators:
+  - name: mistral-7b
+    provider: local
+    model_id: mistral:latest
+    family: mistral
+  - name: gemma3-12b
+    provider: local
+    model_id: gemma3:12b
+    family: gemma
+  - name: qwen-coder-7b
+    provider: local
+    model_id: qwen2.5-coder:7b
+    family: qwen
+
+# Two Claude judges (same family, different capability) so the jury and
+# self-preference analyses both have something to work with.
+judges:
+  - name: claude-haiku-judge
+    provider: anthropic
+    model_id: claude-haiku-4-5
+    family: anthropic
+  - name: claude-sonnet-judge
+    provider: anthropic
+    model_id: claude-sonnet-4-6
+    family: anthropic
+
+
+metrics:
+  lexical: [rouge, meteor]
+  semantic: [bertscore]
+  judges: [claude-haiku-judge, claude-sonnet-judge]
+  grounding: [ragas_faithfulness]
+
+bias:
+  position: true
+  verbosity: true
+  self_preference: true
+
+output_dir: data/raw
+gold_path: data/gold/hybrid_gold.jsonl
