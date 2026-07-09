@@ -494,4 +494,4 @@ if generations:
             with st.container(border=True):
                 st.markdown(r["answer"])
 else:
-#    st.info("Run `python -m src.generate` to populate this.")
+    st.info("Run `python -m src.generate` to populate this.")
