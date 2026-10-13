@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.git/
+.env
+tests/
+experiments/
+scripts/
+src/
+config/
+data/backup_25/
+.DS_Store
+.ipynb_checkpoints/

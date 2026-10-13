@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: llm-eval-harness-dashboard
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
